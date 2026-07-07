@@ -54,7 +54,7 @@ jobs:
         working-directory: TVBoxOSC
         run: |
           echo "sdk.dir=${ANDROID_HOME}" > local.properties
-          sed -i 's#buildPython("D:/Programs/Python/Python38/python.exe")#buildPython("python3")#' pyramid/build.gradle
+          sed -i 's#buildPython("D:/Programs/Python/Python38/python.exe")#buildPython("python3.10")#' pyramid/build.gradle
           echo '修改VersionName'
           if [ "${{ matrix.userName }}" == "takagen99" ]; then
             # 进行 sed 修改
@@ -99,6 +99,10 @@ jobs:
           java-version: ${{ matrix.java_ver }}
       - uses: gradle/actions/setup-gradle@v4
         if: ${{ env.commit }}
+      - uses: actions/setup-python@v5
+        if: ${{ env.commit }}
+        with:
+          python-version: '3.10'
       - name: Build With Gradle
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
